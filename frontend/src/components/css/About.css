@@ -1,0 +1,13 @@
+.about {
+    height: 200px;
+}
+
+.about h3{
+    padding:20px;
+    font-size: 20px;
+}
+
+.about p{
+    padding: 10px 20px;
+    font-style: italic;
+}

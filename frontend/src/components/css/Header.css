@@ -1,0 +1,115 @@
+header {
+    min-height: 70px;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;   
+}
+
+header .logo a{
+    font-size: 30px;
+    text-decoration: none;
+    color:lightcoral;    
+}
+
+header nav{
+    display:flex;
+}
+
+nav ul li {
+    list-style: none;
+    display:inline-block;
+}
+
+nav ul li a{
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+    padding: 0 15px;
+}
+
+nav ul li a:hover{
+    color: lightcoral;
+}
+
+nav .nav-cart {
+    cursor: pointer;
+    position: relative;
+}
+
+nav .nav-cart span{
+    position: absolute;
+    top: -12px;
+    right: -7px;
+    background: crimson;
+    font-size: 10px;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+header .menu,
+header .close{
+    cursor: pointer;
+    display: none;
+}
+
+.dropdown-content {
+    display: none;
+    z-index: 1;
+    position: absolute;
+    background: white;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 9px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+    font-size:14px;
+}
+
+@media(max-width:771px){
+    header ul{
+        position: fixed;
+        top:-100%;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        background-color: white;
+        z-index: 99;
+        opacity: 0.97;
+        transition: 0.5s linear;
+    }
+    header .menu,
+    header .close{
+        display: block;
+    }
+    header .close{
+        position: absolute;
+        top:10px;
+        right: 20px;
+    }
+    header ul.toggle{
+        top:0;
+    }
+    
+    .dropdown:hover .dropdown-content{
+        display: inline-block;
+    }
+    .dropdown-content a {
+        font-size: 10px;
+        padding: 0;
+    }
+}
