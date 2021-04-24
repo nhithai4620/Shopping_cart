@@ -20,7 +20,7 @@ export class Cart extends React.Component{
             <>
             {
                 cart.map(item =>(
-                    <div className="details cart" key={item._id}>
+                    <div className="details cart" key={item.pd_id}>
                         <img src={item.pd_src} alt=""/>
                         <div className="box">
                             <div className="row">

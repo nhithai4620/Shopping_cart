@@ -7,6 +7,9 @@ export const DataContext = React.createContext();
 export class DataProvider extends Component {
     state = {
         products: [],
+        customers: [],
+        bill: [],
+        bill_details: [],
         cart: [],
         total : 0,
         user : '',
@@ -94,9 +97,17 @@ export class DataProvider extends Component {
     };
 
     async componentDidMount (){
-        const {data} = await axios.get("/api/products");
-        console.log(data);
-        this.setState({products: data});
+        const res1 = await axios.get("/api/products");
+        const res2 = await axios.get("/api/customers");
+        const res3 = await axios.get("/api/bill");
+        const res4 = await axios.get("/api/bill_details")
+
+        this.setState({products: res1.data});
+        this.setState({customers: res2.data});
+        this.setState({bill: res3.data});
+        this.setState({bill_details : res4.data});
+
+
         const dataCart = JSON.parse(localStorage.getItem('dataCart'));
         if(dataCart !== null){
             this.setState({cart: dataCart});
@@ -111,10 +122,10 @@ export class DataProvider extends Component {
 
 
     render(){
-        const {products,cart,total,ad_acount,ad_pass,user,infor} = this.state;
+        const {products,customers,bill,bill_details,cart,total,ad_acount,ad_pass,user,infor} = this.state;
         const {addCart, reduction,increase,remove,getTotal,removeall,changeUser,changeInfor} = this;
         return(
-            <DataContext.Provider value={{products,addCart,cart, reduction,increase,remove,total,getTotal,removeall,ad_acount,ad_pass,changeUser,user,infor,changeInfor}}>
+            <DataContext.Provider value={{products,addCart,cart, reduction,increase,remove,total,getTotal,removeall,ad_acount,ad_pass,changeUser,user,infor,changeInfor, customers,bill,bill_details}}>
                 {this.props.children}
             </DataContext.Provider>
         )

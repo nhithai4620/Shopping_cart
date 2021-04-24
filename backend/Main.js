@@ -55,6 +55,53 @@ app.get('/api/products', (req,res) =>{
     
 })
 
+app.get('/api/customers', (req,res) =>{
+    var customers = [];
+    var sql = "select * from customer";
+    con.query(sql,function(err,results){
+        if (err) throw err;
+        customers = results;
+        res.send(customers);
+    });  
+})
+
+app.get('/api/product_sold', (req,res) =>{
+    var sql = "SELECT SUM(bd_count) as count FROM bill_details;";
+    con.query(sql,function(err,results){
+        if (err) throw err;
+        res.send(results[0]);
+    });  
+})
+
+app.get('/api/revenue', (req,res) =>{
+    var sql = "SELECT SUM(bd_total) as totals FROM bill_details;";
+    con.query(sql,function(err,results){
+        if (err) throw err;
+        res.send(results[0]);
+        console.log(results[0]);
+    });  
+})
+
+app.get('/api/bill', (req,res) =>{
+    var bill = [];
+    var sql = "select * from bill";
+    con.query(sql,function(err,results){
+        if (err) throw err;
+        bill = results;
+        res.send(bill);
+    });  
+})
+
+app.get('/api/bill_details', (req,res) =>{
+    var bill_details = [];
+    var sql = "select * from bill_details";
+    con.query(sql,function(err,results){
+        if (err) throw err;
+        bill_details = results;
+        res.send(bill_details);
+    });  
+})
+
 app.post("/api/login", (req, res) => {
     var sql = 'SELECT * FROM customer WHERE ctm_account = ? AND ctm_password = ?';
     user = req.body;
@@ -80,7 +127,6 @@ app.post("/api/login", (req, res) => {
 })
 
 
-
 app.post("/api/signup", (req, res) => {
     var sql = 'insert into customer(ctm_name,ctm_sex,ctm_birth,ctm_point,ctm_account,ctm_password)  value(?,?,?,?,?,?);';
     var user = req.body;
@@ -102,6 +148,7 @@ app.post("/api/signup", (req, res) => {
     }   
 })
 
+
 app.post("/api/changeinfor", (req, res) => {
     var sql = 'update customer set ctm_name=?,ctm_sex=?,ctm_birth=?,ctm_point=?,ctm_account=?,ctm_password=? where ctm_id=?';
     var user = req.body;
@@ -121,6 +168,42 @@ app.post("/api/changeinfor", (req, res) => {
         res.send('Please enter Username and Password!');
         res.end();
     }
+})
+
+app.post("/api/pay", (req, res) => {
+    var data = req.body;
+    var Error = false;
+    if(data){
+        var values1 =[data.id, data.customerid, data.date];
+        var values2 = [];
+        var sql1 = 'insert into bill value(?,?,?);';
+        var sql2 = 'insert into bill_details value(?,?,?,?);';
+        con.query(sql1,values1, function(error, results) {
+            if (error)	{
+                console.log(error);
+                Error = true;
+                throw error;      
+            }
+        });
+        data.Cart.map(item =>{
+            values2 = [data.id, item.pd_id,item.pd_count, item.pd_count*item.pd_price];
+            con.query(sql2,values2, function(error, results) {
+                if (error)	{
+                    console.log(error);
+                    Error = true;
+                    throw error;
+                }
+            });
+        })
+        if (Error == false){
+            res.send("success");
+        }else{
+            res.send("error")
+        }
+        res.end();   
+    }
+ 
+
 })
 
 

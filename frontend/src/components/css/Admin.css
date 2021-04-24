@@ -1,0 +1,80 @@
+.Admin{
+    display: flex;
+    
+}
+
+.Admin-panel{
+    flex: 25%;
+}
+
+.Admin-panel h3{
+    font-size: 30px;
+    padding:20px;
+    padding-bottom: 40px;
+}
+.Admin-content{
+    flex: 75%;
+
+}
+
+.Admin-list-panel ul{
+    list-style-type: none;
+    padding-bottom: 20px;
+    
+}
+
+.Admin-list-panel ul li{
+    margin-bottom: 20px;
+    padding: 3px;
+    font-size: 17px;
+    letter-spacing: 3px;  
+    margin-right: 2%;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.Admin-list-panel ul li:hover{
+    box-shadow: 2px 8px 20px #ddd;
+}
+
+.dashboard{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-item{
+    flex: 30%;
+    background: rgb(245, 243, 243); 
+    margin: 4%;
+    color: lightcoral;
+    height: 70px;
+    text-align: center;
+    margin: 30px;
+    box-shadow: 2px 8px 20px #ddd;
+    font-size: 18px;
+    border-radius: 4px;
+}
+
+.dashboard-item:hover{
+    box-shadow: none;
+    transition: 1s;
+}
+
+.product_admin_table{
+    margin: 20px;
+}
+
+.product_admin_table th{
+    font-size: 18px;
+    font-family: monospace;
+}
+
+.product_admin_table input[type="text"] {
+    width: 130px;
+    border: none;
+    box-shadow: 2px 5px 15px #ddd;
+    margin: 3px;
+    padding: 2px;
+}

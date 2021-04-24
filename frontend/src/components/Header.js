@@ -37,15 +37,8 @@ export class Header extends React.Component{
               <li><Link to="/product">Product</Link></li>
               <li><Link to="/contact">Contact</Link></li>              
               <li><Link to="/about">About</Link></li>
-              <li className="dropdown"><Link to="/admin">Admin</Link>
-                <div className="dropdown-content">
-                    <a>SẢN PHẨM</a>
-                    <a>KHÁCH HÀNG</a>
-                    <a>HÓA ĐƠN</a>
-                    <a>CHI TIẾT HÓA ĐƠN</a>
-                    <Link to="./home" onClick={this.logout} >LOG OUT</Link>
-                </div> 
-              </li>
+              <li><Link to="/admin">Admin</Link></li>
+              <li><Link to="./home" onClick={this.logout} >LOG OUT</Link></li>
               <li className="close" onClick={this.menuToggle}>
                   <img src={Close} alt="" width="20"/>
               </li>

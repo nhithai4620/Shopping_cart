@@ -2,7 +2,6 @@ import React from 'react';
 import '../css/Signup.css';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import Login from './Login';
 export class Signup extends React.Component{
     constructor(props) {
         super(props);

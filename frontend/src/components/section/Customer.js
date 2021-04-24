@@ -92,7 +92,13 @@ export class Customer extends React.Component{
     };
 
     
-    render(){   
+    render(){
+        if (this.context.infor == "")   {
+            return <div style={{textAlign:"center"}}>
+                <h1>Please Login</h1>
+            </div>
+        }
+        else {
         return (
             <div className="customer" id="customer">
                 <div className="testbox">
@@ -137,6 +143,7 @@ export class Customer extends React.Component{
                 </div>
             </div>        
         );
+        }
     }
 }
 
