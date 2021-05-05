@@ -25,7 +25,6 @@ export class Details extends React.Component{
         this.getProduct();
     }
 
-
     render(){
         const {product} = this.state;
         const {addCart} = this.context;

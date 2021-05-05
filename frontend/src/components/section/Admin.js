@@ -22,6 +22,7 @@ export class Admin extends React.Component{
         invoice_total: 0,
         best_customer: '',
         best_sale: '',
+        delete_id: 0,
     };
 
     onChangeDas =() =>{
@@ -39,6 +40,8 @@ export class Admin extends React.Component{
     onChangeInvo =()=>{
         this.setState({dash: false, pro: false, cus: false, invoice: true})
     }
+
+    on
     async componentDidMount (){
         const res = await axios.get("/api/product_sold");
         const res1 = await axios.get("/api/revenue");
@@ -48,7 +51,15 @@ export class Admin extends React.Component{
         this.setState({invoice_total: this.context.bill.length});
         this.setState({product_sold: res.data.count});
         this.setState({revenue: res1.data.totals});
+    }
 
+    onDeleteProducts = (id) =>{
+        this.context.remove(id);
+        window.location.reload();
+    }
+    onDeleteCustomers = (id) =>{
+        this.context.removecus(id);
+        window.location.reload();
     }
 
     changePanel = () => {
@@ -96,7 +107,7 @@ export class Admin extends React.Component{
                     <td><input type="text" value={item.pd_description}/></td>
                     <td><input type="text" value={item.pd_content}/></td>
                     <td><input type="text" value={item.pd_price}/></td>
-                    <td><img src={Trash} style={{width:"20px" , paddingLeft:"8px"}}/></td>
+                    <td><img src={Trash} style={{width:"20px" , paddingLeft:"8px"}} onClick={() =>this.onDeleteProducts(item.pd_id)}/></td>
                     <td><img src={Save} style={{width:"20px" , paddingLeft:"8px"}}/></td>
                     </tr>
                     </tbody>
@@ -135,7 +146,7 @@ export class Admin extends React.Component{
                     <td><input type="text" value={item.ctm_point}/></td>
                     <td><input type="text" value={item.ctm_account}/></td>
                     <td><input type="text" value={item.ctm_password}/></td>
-                    <td><img src={Trash} style={{width:"20px" , paddingLeft:"8px"}}/></td>
+                    <td><img src={Trash} style={{width:"20px" , paddingLeft:"8px"}} onClick={() =>this.onDeleteCustomers(item.ctm_id)}/></td>
                     <td><img src={Save} style={{width:"20px" , paddingLeft:"8px"}}/></td>
                     </tr>
                     </tbody>
@@ -215,8 +226,10 @@ export class Admin extends React.Component{
         
     }
     render(){
+        if (this.context.user ==="Admin"){
         
         return (
+            
             <div className="Admin" id="admin">
                 <div className="Admin-panel">
                     <h3>Admin panel</h3>
@@ -235,8 +248,10 @@ export class Admin extends React.Component{
                     }
                 </div>
             </div>
+             
 
         );
+        }
 }
 }
 

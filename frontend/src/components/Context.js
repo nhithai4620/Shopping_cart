@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-
 export const DataContext = React.createContext();
 
 export class DataProvider extends Component {
@@ -12,7 +11,7 @@ export class DataProvider extends Component {
         bill_details: [],
         cart: [],
         total : 0,
-        user : '',
+        user : localStorage.getItem('dataUser'),
         infor : []
 
     };
@@ -65,16 +64,35 @@ export class DataProvider extends Component {
     };
 
     remove = id => {
-        if (window.confirm("Do you want to delete this product?")){
-            const {cart} = this.state;
-            cart.forEach((item, index)=>{
-            if(item.pd_id === id){
-                cart.splice(index,1);
+        var data = [id];
+        axios
+        .post(`http://localhost:5000/api/delete_product`, data)
+        .then(res =>{
+            console.log(res.data);
+            if (res.data = "true"){
+                alert("Success");
             }
-            })
-            this.setState({cart : cart});
-            this.getTotal();
-        }        
+            else {
+                alert("error");
+            }
+        })
+        .catch(err => console.log(err));     
+    };
+
+    removecus = id => {
+        var data = [id];
+        axios
+        .post(`http://localhost:5000/api/delete_customer`, data)
+        .then(res =>{
+            console.log(res.data);
+            if (res.data = "true"){
+                alert("Success");
+            }
+            else {
+                alert("error");
+            }
+        })
+        .catch(err => console.log(err));     
     };
 
     removeall =()=>{
@@ -94,6 +112,7 @@ export class DataProvider extends Component {
     componentDidUpdate(){
         localStorage.setItem('dataCart',JSON.stringify(this.state.cart))
         localStorage.setItem('dataTotal',JSON.stringify(this.state.total))
+        localStorage.setItem('dataUser',this.state.user)
     };
 
     async componentDidMount (){
@@ -117,15 +136,20 @@ export class DataProvider extends Component {
         if(dataTotal !== null){
             this.setState({total: dataTotal});
         }
+
+        const dataUser = localStorage.getItem('dataUser');
+        console.log(dataUser);
+        if(dataUser !== null){
+            this.setState({user: dataUser});
+        }
+
     }
     
-
-
     render(){
         const {products,customers,bill,bill_details,cart,total,ad_acount,ad_pass,user,infor} = this.state;
-        const {addCart, reduction,increase,remove,getTotal,removeall,changeUser,changeInfor} = this;
+        const {addCart, reduction,increase,remove,removecus,getTotal,removeall,changeUser,changeInfor} = this;
         return(
-            <DataContext.Provider value={{products,addCart,cart, reduction,increase,remove,total,getTotal,removeall,ad_acount,ad_pass,changeUser,user,infor,changeInfor, customers,bill,bill_details}}>
+            <DataContext.Provider value={{products,addCart,cart, reduction,increase,remove,removecus,total,getTotal,removeall,ad_acount,ad_pass,changeUser,user,infor,changeInfor, customers,bill,bill_details}}>
                 {this.props.children}
             </DataContext.Provider>
         )

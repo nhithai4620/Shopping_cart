@@ -148,6 +148,46 @@ app.post("/api/signup", (req, res) => {
     }   
 })
 
+app.post("/api/delete_product", (req, res) => {
+    var sql = 'call delete_product(?)';
+    console.log(req.body);
+    var  values= req.body;
+
+    console.log(values);
+    if (values){
+        con.query(sql,values, function(error, results) {
+            if (error)	{
+                res.send('false');
+                throw error;
+            }
+            else {
+                res.send('true');
+            }
+            res.end();
+        });
+    }
+})
+
+app.post("/api/delete_customer", (req, res) => {
+    var sql = 'call delete_customer(?)';
+    console.log(req.body);
+    var  values= req.body;
+
+    console.log(values);
+    if (values){
+        con.query(sql,values, function(error, results) {
+            if (error)	{
+                res.send('false');
+                throw error;
+            }
+            else {
+                res.send('true');
+            }
+            res.end();
+        });
+    }
+})
+
 
 app.post("/api/changeinfor", (req, res) => {
     var sql = 'update customer set ctm_name=?,ctm_sex=?,ctm_birth=?,ctm_point=?,ctm_account=?,ctm_password=? where ctm_id=?';
