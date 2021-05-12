@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/Signup.css';
 import {Link} from 'react-router-dom';
+import Login from './Login';
 import axios from 'axios';
 export class Signup extends React.Component{
     constructor(props) {
@@ -11,7 +12,8 @@ export class Signup extends React.Component{
                     point: 0,
                     account: '',
                     password: '',
-                    confirmPass: '',    
+                    confirmPass: '',
+                    signup: false    
         }; 
     }
     onchangeName = e => {
@@ -54,9 +56,9 @@ export class Signup extends React.Component{
         }
         this.setState({
             confirmPass: pas
-        });
-        
+        });       
     }
+
     handleSubmit = e => {
         e.preventDefault();
         if (this.state.password === this.state.confirmPass && this.state.name != "" && this.state.account != "Admin"){
@@ -65,9 +67,10 @@ export class Signup extends React.Component{
             .then(res =>{
                 if (res.data == "success"){
                     alert('Signup Success, please go to login.');
+                    this.setState({signup: true})
                 }
                 else {
-                    alert('Please enter the correct syntax or account has been used');
+                    alert('Please enter the correct syntax or account has been used');                   
                 }
             })
             .catch(err => console.log(err));
@@ -77,8 +80,13 @@ export class Signup extends React.Component{
         }
     };
 
-
     render(){
+        if (this.state.signup == true){
+            return (
+                <Login/>
+            )
+        }
+        else{
         return (
             <div className="signup">
                 <h1>Sign up</h1>
@@ -120,6 +128,7 @@ export class Signup extends React.Component{
                 </form>
             </div>
         );
+        }
     }
 }
 

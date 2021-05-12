@@ -37,12 +37,10 @@ var con = mysql.createConnection({
     database: "shopping_cart"
 });
 
-
 var user = {
     account : "",
     password : "",
 }
-
 
 app.get('/api/products', (req,res) =>{
     var products = [];
@@ -51,8 +49,7 @@ app.get('/api/products', (req,res) =>{
         if (err) throw err;
         products = results;
         res.send(products);
-    });
-    
+    });  
 })
 
 app.get('/api/customers', (req,res) =>{
@@ -78,7 +75,6 @@ app.get('/api/revenue', (req,res) =>{
     con.query(sql,function(err,results){
         if (err) throw err;
         res.send(results[0]);
-        console.log(results[0]);
     });  
 })
 

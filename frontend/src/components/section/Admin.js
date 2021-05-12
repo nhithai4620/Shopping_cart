@@ -23,7 +23,10 @@ export class Admin extends React.Component{
         best_customer: '',
         best_sale: '',
         delete_id: 0,
+        products : this.context.products, 
+        customers : this.context.customers,
     };
+
 
     onChangeDas =() =>{
         this.setState({dash:true, pro: false, cus: false,invoice:false});
@@ -41,26 +44,25 @@ export class Admin extends React.Component{
         this.setState({dash: false, pro: false, cus: false, invoice: true})
     }
 
-    on
     async componentDidMount (){
         const res = await axios.get("/api/product_sold");
         const res1 = await axios.get("/api/revenue");
-        // const res2 = await axios.get("/api/best_customer");
-        // const res3 = await axios.get("/api/best_sale");
         this.setState({customer_total: this.context.customers.length});
         this.setState({invoice_total: this.context.bill.length});
         this.setState({product_sold: res.data.count});
         this.setState({revenue: res1.data.totals});
     }
 
-    onDeleteProducts = (id) =>{
+    onDeleteProducts = id =>{
         this.context.remove(id);
         window.location.reload();
     }
-    onDeleteCustomers = (id) =>{
+
+    onDeleteCustomers = id =>{
         this.context.removecus(id);
         window.location.reload();
     }
+
 
     changePanel = () => {
         if (this.state.dash){
@@ -85,7 +87,6 @@ export class Admin extends React.Component{
             </div>
             )      
         } else if(this.state.pro){
-            const {products} = this.context;
             return (
                 <table className="product_admin_table">
                     <tbody>
@@ -98,30 +99,23 @@ export class Admin extends React.Component{
                         <th>Price</th>
                     </tr>
                     </tbody>
-                    {products.map(item =>(
+                    {this.state.products.map(item =>(
                     <tbody key={item.pd_id}>
                     <tr >
-                    <td><input type="text" value={item.pd_id}/></td>
-                    <td><input type="text" value={item.pd_name}/></td>
-                    <td><input type="text" value={item.pd_src}/></td>
-                    <td><input type="text" value={item.pd_description}/></td>
+                    <td><input type="text" value={item.pd_id} /></td>
+                    <td><input type="text" value={item.pd_name} /></td>
+                    <td><input type="text" value={item.pd_src} /></td>
+                    <td><input type="text" value={item.pd_description} /></td>
                     <td><input type="text" value={item.pd_content}/></td>
-                    <td><input type="text" value={item.pd_price}/></td>
+                    <td><input type="text" value={item.pd_price} /></td>
                     <td><img src={Trash} style={{width:"20px" , paddingLeft:"8px"}} onClick={() =>this.onDeleteProducts(item.pd_id)}/></td>
-                    <td><img src={Save} style={{width:"20px" , paddingLeft:"8px"}}/></td>
                     </tr>
                     </tbody>
                     
                 ))}
-                    <tbody>
-                    <tr>
-                        <td colSpan="6" style={{width: "100%", textAlign:"center"}}><img src={Add} style={{width:"30px" , paddingLeft:"8px"}}/></td>
-                    </tr>
-                    </tbody>
                 </table>
             )
         }else if(this.state.cus){
-            const {customers} = this.context;
             return(
                 <div>
                     <table className="product_admin_table">
@@ -136,7 +130,7 @@ export class Admin extends React.Component{
                         <th>Password</th>
                     </tr>
                     </tbody>
-                    {customers.map(item =>(
+                    {this.state.customers.map(item =>(
                     <tbody key={item.ctm_id}>
                     <tr >
                     <td><input type="text" value={item.ctm_id} style={{width:"20px"}}/></td>
@@ -147,16 +141,10 @@ export class Admin extends React.Component{
                     <td><input type="text" value={item.ctm_account}/></td>
                     <td><input type="text" value={item.ctm_password}/></td>
                     <td><img src={Trash} style={{width:"20px" , paddingLeft:"8px"}} onClick={() =>this.onDeleteCustomers(item.ctm_id)}/></td>
-                    <td><img src={Save} style={{width:"20px" , paddingLeft:"8px"}}/></td>
                     </tr>
                     </tbody>
                     
                 ))}
-                    <tbody>
-                    <tr>
-                        <td colSpan="6" style={{width: "100%", textAlign:"center"}}><img src={Add} style={{width:"30px" , paddingLeft:"8px"}}/></td>
-                    </tr>
-                    </tbody>
                 </table>
                 </div>
             )
@@ -180,17 +168,10 @@ export class Admin extends React.Component{
                         <td><input type="text" value={item.b_id} style={{width:"150px"}}/></td>
                         <td><input type="text" value={item.b_customerid} style={{width:"200px"}}/></td>
                         <td><input type="text" value={item.b_date} style={{width:"200px"}}/></td>
-                        <td><img src={Trash} style={{width:"20px" , paddingLeft:"8px"}}/></td>
-                        <td><img src={Save} style={{width:"20px" , paddingLeft:"8px"}}/></td>
                         </tr>
                         </tbody>
                         
                         ))}
-                        <tbody>
-                        <tr>
-                            <td colSpan="6" style={{width: "100%", textAlign:"center"}}><img src={Add} style={{width:"30px" , paddingLeft:"8px"}}/></td>
-                        </tr>
-                        </tbody>
                     </table>
                     <div><h1>Bill details</h1></div>
                     <table className="product_admin_table">
@@ -209,16 +190,9 @@ export class Admin extends React.Component{
                         <td><input type="text" value={item.bd_productid}/></td>
                         <td><input type="text" value={item.bd_count}/></td>
                         <td><input type="text" value={item.bd_total}/></td>
-                        <td><img src={Trash} style={{width:"20px" , paddingLeft:"8px"}}/></td>
-                        <td><img src={Save} style={{width:"20px" , paddingLeft:"8px"}}/></td>
                         </tr>
                         </tbody>                       
                         ))}
-                        <tbody>
-                        <tr>
-                            <td colSpan="6" style={{width: "100%", textAlign:"center"}}><img src={Add} style={{width:"30px" , paddingLeft:"8px"}}/></td>
-                        </tr>
-                        </tbody>
                     </table>
                 </div>
             )

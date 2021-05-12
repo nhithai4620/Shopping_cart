@@ -50,74 +50,79 @@ export class Payment extends React.Component{
     };
 
     render(){
-        const {infor,cart,total,removeall} = this.context;
+        const {infor,cart,total,user} = this.context;
         console.log(this.state);
-        if (cart.length ===0){
-            return <h2 style={{textAlign: "center", paddingBottom:"155px"}}>Nothings Product</h2>
-        }else{
-        return (
-            <div className="payment">
-                <h1>Invoice</h1>
-                <table className="table_bill">
-                    <tbody>
-                    <tr>
-                        <td>Bill id : </td>
-                        <td>{this.state.id}</td>
-                    </tr>
+        if(user!= ''){
+            if (cart.length ===0){
+                return <h2 style={{textAlign: "center", paddingBottom:"155px"}}>Nothings Product</h2>
+            }else{
+            return (
+                <div className="payment">
+                    <h1>Invoice</h1>
+                    <table className="table_bill">
+                        <tbody>
+                        <tr>
+                            <td>Bill id : </td>
+                            <td>{this.state.id}</td>
+                        </tr>
+                        
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td>Customer id : </td>
+                            <td>{this.state.customerid}</td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td>Date : </td>
+                            <td>{this.state.date}</td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td>Point : </td>
+                            <td>{infor.ctm_point} <span style={{fontSize:"10px",color:"red",opacity:"0.6", marginLeft:"2%"}}>(100 points will be discount 5% in bill)</span></td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td>Product : </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table className="table_product">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Number</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                        </tbody>
+                    {cart.map(item =>(
+                        <tbody key={item.pd_id}>
+                        <tr >
+                        <td>{item.pd_name}</td>
+                        <td>{item.pd_count}</td>
+                        <td>{item.pd_price}</td>
+                        <td>{item.pd_count*item.pd_price}</td>
+                        </tr>
+                        </tbody>
+                    ))}
+                    </table>
+
+                    <p style={{color:"red",fontSize:"26px",width:"100", textAlign:"right",marginRight:"15%"}}>Total : {total} $</p>
+
                     
-                    </tbody>
-                    <tbody>
-                    <tr>
-                        <td>Customer id : </td>
-                        <td>{this.state.customerid}</td>
-                    </tr>
-                    </tbody>
-                    <tbody>
-                    <tr>
-                        <td>Date : </td>
-                        <td>{this.state.date}</td>
-                    </tr>
-                    </tbody>
-                    <tbody>
-                    <tr>
-                        <td>Point : </td>
-                        <td>{infor.ctm_point} <span style={{fontSize:"10px",color:"red",opacity:"0.6", marginLeft:"2%"}}>(100 points will be discount 5% in bill)</span></td>
-                    </tr>
-                    </tbody>
-                    <tbody>
-                    <tr>
-                        <td>Product : </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table className="table_product">
-                    <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <th>Number</th>
-                        <th>Price</th>
-                        <th>Total</th>
-                    </tr>
-                    </tbody>
-                {cart.map(item =>(
-                    <tbody key={item.pd_id}>
-                    <tr >
-                    <td>{item.pd_name}</td>
-                    <td>{item.pd_count}</td>
-                    <td>{item.pd_price}</td>
-                    <td>{item.pd_count*item.pd_price}</td>
-                    </tr>
-                    </tbody>
-                ))}
-                </table>
-
-                <p style={{color:"red",fontSize:"26px",width:"100", textAlign:"right",marginRight:"15%"}}>Total : {total} $</p>
-
-                
-                <button className="pay" onClick={this.handleButton}>Pay</button>
-            </div>
-        );
+                    <button className="pay" onClick={this.handleButton}>Pay</button>
+                </div>
+            );
+            }
+        }
+        else {
+            return <h1 style={{fontSize:"25px",textAlign:"center", padding:"100px"}}>Please Login</h1>
         }
     }
 }

@@ -36,7 +36,6 @@ export class Login extends React.Component{
 
     handleSubmit = e => {
         e.preventDefault();
-
         axios
           .post(`http://localhost:5000/api/login`, this.state)
           .then(res =>{

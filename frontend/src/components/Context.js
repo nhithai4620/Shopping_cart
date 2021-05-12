@@ -13,7 +13,6 @@ export class DataProvider extends Component {
         total : 0,
         user : localStorage.getItem('dataUser'),
         infor : []
-
     };
 
     changeInfor = (inf) =>{
@@ -63,7 +62,7 @@ export class DataProvider extends Component {
         this.getTotal();
     };
 
-    remove = id => {
+    removepd = id => {
         var data = [id];
         axios
         .post(`http://localhost:5000/api/delete_product`, data)
@@ -147,9 +146,9 @@ export class DataProvider extends Component {
     
     render(){
         const {products,customers,bill,bill_details,cart,total,ad_acount,ad_pass,user,infor} = this.state;
-        const {addCart, reduction,increase,remove,removecus,getTotal,removeall,changeUser,changeInfor} = this;
+        const {addCart, reduction,increase,removepd,removecus,getTotal,removeall,changeUser,changeInfor} = this;
         return(
-            <DataContext.Provider value={{products,addCart,cart, reduction,increase,remove,removecus,total,getTotal,removeall,ad_acount,ad_pass,changeUser,user,infor,changeInfor, customers,bill,bill_details}}>
+            <DataContext.Provider value={{products,addCart,cart, reduction,increase,removepd,removecus,total,getTotal,removeall,ad_acount,ad_pass,changeUser,user,infor,changeInfor, customers,bill,bill_details}}>
                 {this.props.children}
             </DataContext.Provider>
         )
