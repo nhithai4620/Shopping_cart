@@ -17,7 +17,7 @@ export class Contact extends React.Component{
                         <input type="submit" value="Submit" className="button"/>
                     </form>
                 </div>
-                </div>        
+            </div>        
         );
     }
 }
